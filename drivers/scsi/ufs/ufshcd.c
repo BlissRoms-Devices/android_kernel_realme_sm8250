@@ -973,7 +973,7 @@ static void ufshcd_print_tmrs(struct ufs_hba *hba, unsigned long bitmap)
 		struct utp_task_req_desc *tmrdp = &hba->utmrdl_base_addr[tag];
 
 		dev_err(hba->dev, "TM[%d] - Task Management Header\n", tag);
-		ufshcd_hex_dump("", tmrdp, sizeof(*tmrdp));
+		ufshcd_hex_dump(hba,"", tmrdp, sizeof(*tmrdp));
 	}
 }
 
@@ -1196,7 +1196,6 @@ static bool ufshcd_get_tm_free_slot(struct ufs_hba *hba, int *free_slot)
 {
 	int tag;
 	bool ret = false;
-
 	if (!free_slot)
 		goto out;
 
@@ -7743,7 +7742,6 @@ out:
 static int __ufshcd_issue_tm_cmd(struct ufs_hba *hba,
 		struct utp_task_req_desc *treq, u8 tm_function)
 {
-	struct utp_task_req_desc *treq;
 	struct Scsi_Host *host = hba->host;
 	unsigned long flags;
 	int free_slot, task_tag, err;
